@@ -182,6 +182,9 @@ Neste projeto, elevei o nível da infraestrutura utilizando Docker para gerencia
     * Análise de faturamento por categoria.
     * Relatórios de desempenho de vendas.
     * Controle de estoque e fornecimento.
+ 
+      ## Link do script SQL Completo:
+      
 
 
 
