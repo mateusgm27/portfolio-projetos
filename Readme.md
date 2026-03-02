@@ -184,7 +184,9 @@ Neste projeto, elevei o nível da infraestrutura utilizando Docker para gerencia
     * Controle de estoque e fornecimento.
  
       ## Link do script SQL Completo:
-      
+      projeto7.sql
+
+      ## Link Repositorio: https://drive.google.com/file/d/14iReXet_X0de7I4o4AdlmWSTRSUCewx8/view?usp=sharing
 
 
 
