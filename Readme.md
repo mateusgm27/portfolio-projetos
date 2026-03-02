@@ -172,6 +172,18 @@ https://github.com/mateuzin777/portfolio-projetos/blob/main/projeto06.sql
 https://github.com/mateuzin777/portfolio-projetos/blob/main/projeto06.pdf
 
 
+## 🚀 Projeto 07: Sistema de Gestão ERP (SQL Analítico & Docker)
+
+Neste projeto, elevei o nível da infraestrutura utilizando Docker para gerenciar o banco de dados, garantindo um ambiente escalável e isolado.
+
+* Infraestrutura:** Banco de dados MySQL rodando em container Docker, gerenciado via **Portainer*.
+* Modelagem (ER Diagram):** Estrutura completa de vendas, produtos, fornecedores e categorias (link abaixo).
+* *SQL Avançado:* Desenvolvimento de 18 queries complexas, incluindo
+    * Análise de faturamento por categoria.
+    * Relatórios de desempenho de vendas.
+    * Controle de estoque e fornecimento.
+
+
 
 
 
