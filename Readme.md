@@ -176,8 +176,10 @@ https://github.com/mateuzin777/portfolio-projetos/blob/main/projeto06.pdf
 
 Neste projeto, elevei o nível da infraestrutura utilizando Docker para gerenciar o banco de dados, garantindo um ambiente escalável e isolado.
 
-* Infraestrutura:** Banco de dados MySQL rodando em container Docker, gerenciado via **Portainer*.
-* Modelagem (ER Diagram): Estrutura completa de vendas, produtos, fornecedores e categorias (link abaixo).
+**Infraestrutura:** Banco de dados MySQL rodando em container Docker, gerenciado via **Portainer*.
+* Modelagem (ER Diagram): Estrutura completa de vendas, produtos, fornecedores e categorias
+Modelagem de Dados: Estrutura desenvolvida via ER Diagram (utilizando Draw.io) para garantir a integridade referencial.
+
 * *SQL Avançado:* Desenvolvimento de 18 queries complexas, incluindo
     * Análise de faturamento por categoria.
     * Relatórios de desempenho de vendas.
