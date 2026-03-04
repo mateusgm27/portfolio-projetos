@@ -188,7 +188,7 @@ Modelagem de Dados: Estrutura desenvolvida via ER Diagram (utilizando Draw.io) p
       ## Link do script SQL Completo:
       https://github.com/mateusgm27/portfolio-projetos/blob/main/projeto7.sql
 
-      ## Link Repositorio: https://drive.google.com/file/d/14iReXet_X0de7I4o4AdlmWSTRSUCewx8/view?usp=sharing
+      ## Link do Er Diagram : diagrama.png
 
 
 
