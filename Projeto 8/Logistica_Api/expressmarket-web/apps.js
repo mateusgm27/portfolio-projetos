@@ -194,17 +194,48 @@ window.tratarErroImagem = function(img) {
     img.src = IMAGEM_PADRAO;
 };
 
-// CARREGAMENTO DE PRODUTOS
+// CARREGAMENTO DE PRODUTOS COM FALLBACK COMPLETO
 async function carregarProdutos() {
     try {
         const resposta = await fetch(`${API_URL}/Produtos`);
         if (!resposta.ok) throw new Error('Erro ao buscar produtos');
 
         todosProdutos = await resposta.json();
-        aplicarFiltros();
     } catch (erro) {
-        console.error('Erro na requisição da API:', erro);
+        console.warn('API local indisponível. Gerando catálogo completo com base nas imagens mapeadas...', erro);
+        
+        todosProdutos = Object.keys(mapaImagensOnline).map((chave, index) => {
+            const nomeFormatado = chave.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1)).join(' ');
+            
+            let categoriaGeral = "Geral";
+            const chaveLower = chave.toLowerCase();
+            if (chaveLower.includes('livro')) categoriaGeral = "Livros";
+            else if (chaveLower.includes('camisa') || chaveLower.includes('tenis') || chaveLower.includes('mochila') || chaveLower.includes('relogio') || chaveLower.includes('oculos') || chaveLower.includes('bone') || chaveLower.includes('jaqueta') || chaveLower.includes('vestido')) categoriaGeral = "Moda";
+            else if (chaveLower.includes('mouse') || chaveLower.includes('teclado') || chaveLower.includes('headset') || chaveLower.includes('controle') || chaveLower.includes('jogo') || chaveLower.includes('playstation') || chaveLower.includes('xbox') || chaveLower.includes('cadeira gamer') || chaveLower.includes('volante') || chaveLower.includes('nitendo') || chaveLower.includes('video game') || chaveLower.includes('suporte gamer') || chaveLower.includes('capa case')) categoriaGeral = "Games";
+            else if (chaveLower.includes('iphone') || chaveLower.includes('samsung') || chaveLower.includes('kindle') || chaveLower.includes('notebook') || chaveLower.includes('macbook') || chaveLower.includes('monitor') || chaveLower.includes('tv') || chaveLower.includes('caixa de som') || chaveLower.includes('camera') || chaveLower.includes('fone') || chaveLower.includes('power bank') || chaveLower.includes('tablet') || chaveLower.includes('smartwatch')) categoriaGeral = "Eletrônicos";
+            else if (chaveLower.includes('geladeira') || chaveLower.includes('fogao') || chaveLower.includes('microondas') || chaveLower.includes('aspirador') || chaveLower.includes('cafeteira') || chaveLower.includes('liquidificador') || chaveLower.includes('batedeira') || chaveLower.includes('maquina de lavar') || chaveLower.includes('purificador')) categoriaGeral = "Eletrodomésticos";
+            else if (chaveLower.includes('boneca') || chaveLower.includes('lego') || chaveLower.includes('carrinho') || chaveLower.includes('pista') || chaveLower.includes('pelucia') || chaveLower.includes('massinha') || chaveLower.includes('quebra-cabeça') || chaveLower.includes('jogo imagem')) categoriaGeral = "Brinquedos";
+            else if (chaveLower.includes('racao') || chaveLower.includes('gato') || chaveLower.includes('cachorro') || chaveLower.includes('coleira') || chaveLower.includes('shampoo') || chaveLower.includes('areia') || chaveLower.includes('arranhador') || chaveLower.includes('comedouro') || chaveLower.includes('brinquedo para gato')) categoriaGeral = "Pet";
+            else if (chaveLower.includes('bicicleta') || chaveLower.includes('bola') || chaveLower.includes('chuteira') || chaveLower.includes('esteira') || chaveLower.includes('halter') || chaveLower.includes('capacete') || chaveLower.includes('corda') || chaveLower.includes('kimono') || chaveLower.includes('luva de boxe')) categoriaGeral = "Esporte";
+            else if (chaveLower.includes('oleo') || chaveLower.includes('bateria') || chaveLower.includes('pneu') || chaveLower.includes('lampada') || chaveLower.includes('sensor') || chaveLower.includes('capa para banco') || chaveLower.includes('kit multimidia') || chaveLower.includes('som automotivo')) categoriaGeral = "Automotivo";
+            else if (chaveLower.includes('perfume') || chaveLower.includes('base') || chaveLower.includes('chapinha') || chaveLower.includes('secador') || chaveLower.includes('protetor') || chaveLower.includes('serum') || chaveLower.includes('kit pinceis') || chaveLower.includes('mascara de cilios') || chaveLower.includes('kit maquiagem')) categoriaGeral = "Beleza";
+            else if (chaveLower.includes('cadeira') || chaveLower.includes('mesa') || chaveLower.includes('cama') || chaveLower.includes('tapete') || chaveLower.includes('cortina') || chaveLower.includes('panela') || chaveLower.includes('espelho') || chaveLower.includes('guarda roupa') || chaveLower.includes('luminaria') || chaveLower.includes('ventilador')) categoriaGeral = "Casa";
+            else if (chaveLower.includes('impressora') || chaveLower.includes('cabo') || chaveLower.includes('roteador') || chaveLower.includes('ssd') || chaveLower.includes('memoria') || chaveLower.includes('hub') || chaveLower.includes('webcam') || chaveLower.includes('placa de video')) categoriaGeral = "Informática";
+            else if (chaveLower.includes('azeite') || chaveLower.includes('arroz') || chaveLower.includes('cafe') || chaveLower.includes('chocolate') || chaveLower.includes('feijao') || chaveLower.includes('leite') || chaveLower.includes('macarrao') || chaveLower.includes('coca')) categoriaGeral = "Alimentos";
+
+            const precoFicticio = ((index * 43 + 17) % 950) + 49.90;
+
+            return {
+                id: index + 1,
+                nome: nomeFormatado,
+                preco: Number(precoFicticio.toFixed(2)),
+                categoria: categoriaGeral,
+                estoque: 15,
+                descricao: `${nomeFormatado} de excelente qualidade disponível no ExpressMarket.`
+            };
+        });
     }
+    aplicarFiltros();
 }
 
 // EXIBIÇÃO NA TELA
@@ -230,7 +261,7 @@ function exibirProdutos(produtos) {
 
         return `
             <article class="card-produto" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background: white; text-align: center;">
-               <img src="${imagemFinal}" 
+                 <img src="${imagemFinal}" 
                     alt="${prod.nome || 'Produto'}" 
                     onerror="tratarErroImagem(this);" 
                     style="width: 100%; height: 160px; object-fit: contain; border-radius: 4px; margin-bottom: 8px;">
