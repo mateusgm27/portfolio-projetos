@@ -20,7 +20,7 @@ function normalizarTexto(texto) {
         .trim();
 }
 
-// 🗺️ Mapeamento de Imagens Online (Unsplash & Pexels Fallbacks)
+// 🗺️ Mapeamento de Imagens Online 
 const mapaImagensOnline = {
     // Alimentos
     "azeite extra virgem": "assets/img/azeite.jpeg",
