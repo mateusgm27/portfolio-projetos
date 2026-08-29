@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ExpressMarket - Compre celulares, eletrônicos, moda e muito mais com frete grátis e entrega rápida.">
+    <title>ExpressMarket - Comprou, Chegou!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
+
+    <!-- BARRA SUPERIOR (ESTILO SHOPEE) -->
+    <div style="background: #e65100; color: white; padding: 6px 50px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: white; text-decoration: none;">Central do Vendedor</a>
+            <span>|</span>
+            <a href="#" style="color: white; text-decoration: none;">Baixe o App</a>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <button id="btnRastreio" style="background: none; border: none; color: white; cursor: pointer; font-size: 0.85rem; text-decoration: underline;">Rastrear Encomenda</button>
+            <span>|</span>
+            <a href="#" style="color: white; text-decoration: none;">Ajuda</a>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO PRINCIPAL -->
+    <header style="background: #e65100; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+        <!-- Logo + Nome Clicável -->
+        <div id="logoHome" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="ExpressMarket Logo" style="width: 36px; height: 36px; object-fit: contain;">
+            <h1 style="color: white; margin: 0; font-size: 1.6rem; font-weight: bold;">ExpressMarket</h1>
+        </div>
+
+        <!-- Caixa de Busca -->
+        <div class="busca" style="display: flex; flex: 1; max-width: 600px;">
+            <input type="text" placeholder="Buscar produtos, marcas e muito mais..." style="width: 100%; padding: 10px 15px; border: none; border-radius: 4px 0 0 4px; font-size: 0.95rem; outline: none;">
+            <button type="button" style="padding: 10px 25px; background: #bf360c; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold;">Buscar</button>
+        </div>
+
+        <!-- Botões de Ação do Usuário -->
+        <div class="usuarios-acoes" style="display: flex; gap: 12px; align-items: center;">
+            <button id="btnCarrinho" style="background: transparent; border: 1px solid white; color: white; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Carrinho (0)</button>
+            <button id="btnLogin" style="background: white; color: #e65100; border: none; font-weight: bold; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Entrar / Cadastrar</button>
+        </div>
+    </header>
+
+    <main style="flex: 1; padding-bottom: 50px;">
+        <!-- Banner Carrossel -->
+        <section class="banner-carousel" style="position: relative; margin: 20px 50px; border-radius: 12px; overflow: hidden; height: 230px; background: linear-gradient(135deg, #FF4500, #EE4D2D); font-family: Arial, sans-serif;">
+            
+            <div id="sliderBanners" style="display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out;">
+                
+                <!-- BANNER 1: Cupons de Desconto -->
+                <a href="#" onclick="alert('Redirecionando para área de Cupons!')" style="width: 33.333%; height: 100%; text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; box-sizing: border-box; color: white;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: white; color: #EE4D2D; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border-left: 5px dashed #EE4D2D; display: flex; align-items: center; gap: 10px;">
+                            <span style="background: #EE4D2D; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.8rem;">%</span>
+                            CUPOM DE 20% OFF
+                        </div>
+                        <div style="background: white; color: #EE4D2D; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border-left: 5px dashed #EE4D2D; margin-left: 15px;">
+                            R$ 50 OFF
+                        </div>
+                        <div style="background: white; color: #EE4D2D; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border-left: 5px dashed #EE4D2D; margin-left: 30px;">
+                            R$ 20 OFF
+                        </div>
+                    </div>
+
+                    <div style="text-align: right;">
+                        <h2 style="font-size: 2.2rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">RESGATE CUPONS</h2>
+                        <div style="font-size: 2.8rem; font-weight: 900; margin: 5px 0;">ATÉ <span style="font-size: 3.5rem;">20% OFF</span></div>
+                        <span style="background: white; color: #EE4D2D; padding: 8px 22px; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 1rem;">Confira ►</span>
+                    </div>
+                </a>
+
+                <!-- BANNER 2: Frete Grátis / 1ª Compra -->
+                <a href="#" onclick="alert('Redirecionando para Cadastro!')" style="width: 33.333%; height: 100%; text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 0 60px; box-sizing: border-box; color: white;">
+                    <div>
+                        <h2 style="font-size: 2.2rem; margin: 0; font-weight: 800; line-height: 1.2;">CUPOM EXCLUSIVO<br>PARA SUA 1ª COMPRA</h2>
+                        <p style="font-size: 1.5rem; margin: 10px 0 20px 0; font-weight: 500;">Frete Grátis</p>
+                        <span style="background: #C82310; color: white; padding: 10px 24px; border-radius: 20px; font-weight: bold; font-size: 1rem;">Cadastre-se ►</span>
+                    </div>
+
+                    <div style="background: white; color: #333; padding: 25px 35px; border-radius: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #00BFA5; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🚚</div>
+                        <div>
+                            <div style="font-size: 1.6rem; font-weight: 900; color: #111; line-height: 1;">FRETE</div>
+                            <div style="font-size: 1.6rem; font-weight: 900; color: #111; line-height: 1;">GRÁTIS</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- BANNER 3: Produtos em Destaque -->
+                <a href="#" onclick="alert('Redirecionando para Super Ofertas!')" style="width: 33.333%; height: 100%; text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; color: white;">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <div style="background: white; border-radius: 8px; padding: 10px; width: 140px; text-align: center; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative;">
+                            <span style="position: absolute; top: -8px; left: -8px; background: #EE4D2D; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">OFERTA</span>
+                            <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=200&q=80" alt="Mouse Razer" style="height: 75px; object-fit: contain; width: 100%;">
+                            <div style="font-size: 0.75rem; color: #888; text-decoration: line-through; margin-top: 4px;">R$ 350,00</div>
+                            <div style="font-size: 1.1rem; font-weight: 800; color: #EE4D2D;">R$ 280,00</div>
+                            <div style="font-size: 0.65rem; background: #FFF0ED; color: #EE4D2D; font-weight: bold; border-radius: 3px; padding: 2px; margin-top: 2px;">NO PIX</div>
+                        </div>
+
+                        <div style="background: white; border-radius: 8px; padding: 10px; width: 140px; text-align: center; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative;">
+                            <span style="position: absolute; top: -8px; left: -8px; background: #EE4D2D; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 4px;">OFF 25%</span>
+                            <img src="https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=200&q=80" alt="JBL Flip 6" style="height: 75px; object-fit: contain; width: 100%;">
+                            <div style="font-size: 0.75rem; color: #888; text-decoration: line-through; margin-top: 4px;">R$ 840,00</div>
+                            <div style="font-size: 1.1rem; font-weight: 800; color: #EE4D2D;">R$ 629,90</div>
+                            <div style="font-size: 0.65rem; background: #FFF0ED; color: #EE4D2D; font-weight: bold; border-radius: 3px; padding: 2px; margin-top: 2px;">NO PIX</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right;">
+                        <h2 style="font-size: 2.3rem; margin: 0; font-weight: 900;">Super Ofertas</h2>
+                        <div style="background: #0056B3; color: white; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 1.1rem; display: inline-block; margin: 10px 0;">
+                            Cupons até R$90 OFF
+                        </div>
+                        <div>
+                            <span style="background: white; color: #EE4D2D; padding: 8px 22px; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 1rem;">Compre agora ►</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Setas de Navegação -->
+            <button id="btnPrevBanner" style="position: absolute; top: 50%; left: 15px; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; z-index: 10;">❮</button>
+            <button id="btnNextBanner" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; z-index: 10;">❯</button>
+
+            <!-- Indicadores das Bolinhas -->
+            <div style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10;">
+                <span class="dot-banner" style="width: 10px; height: 10px; background: white; border-radius: 50%; display: inline-block; cursor: pointer; opacity: 1;"></span>
+                <span class="dot-banner" style="width: 10px; height: 10px; background: white; border-radius: 50%; display: inline-block; cursor: pointer; opacity: 0.4;"></span>
+                <span class="dot-banner" style="width: 10px; height: 10px; background: white; border-radius: 50%; display: inline-block; cursor: pointer; opacity: 0.4;"></span>
+            </div>
+        </section>
+
+        <!-- Categorias -->
+        <section class="categorias" style="padding: 0 50px; margin-bottom: 30px;">
+            <h3>Categorias</h3>
+            <ul style="display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0;">
+                <li>Eletrônicos</li>
+                <li>Informática</li>
+                <li>Games</li>
+                <li>Eletrodomésticos</li>
+                <li>Casa</li>
+                <li>Moda</li>
+                <li>Beleza</li>
+                <li>Esporte</li>
+                <li>Automotivo</li>
+                <li>Pet</li>
+                <li>Alimentos</li>
+                <li>Brinquedos</li>
+                <li>Livros</li>
+            </ul>
+        </section>
+
+        <!-- Vitrine de Produtos -->
+        <section class="produtos" style="padding: 0 50px; margin-bottom: 40px;">
+            <h3>Produtos em Destaque</h3>
+            <div class="lista-produtos">
+                <!-- Renderização dinâmica via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer style="background: #212121; color: white; text-align: center; padding: 25px; margin-top: auto;">
+        <p style="margin: 0;">&copy; 2026 ExpressMarket - Projeto De E-Commerce & Logística</p>
+    </footer>
+
+    <!-- MODAL DE LOGÍSTICA / RASTREIO -->
+    <div id="modalRastreio" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+            <h3>Rastrear Encomenda</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Digite seu código de rastreio para consultar o status:</p>
+            <input type="text" id="inputCodigoRastreio" placeholder="Ex: BR987654321DF" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <div id="statusRastreio" style="margin-bottom: 15px; font-weight: bold; color: #2e7d32;"></div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" onclick="fecharModal('modalRastreio')" style="background: #757575; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Fechar</button>
+                <button type="button" onclick="consultarRastreio()" style="background: #e65100; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Consultar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE LOGIN / CADASTRO -->
+    <div id="modalLogin" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative;">
+            <button onclick="fecharModal('modalLogin')" style="position: absolute; top: 10px; right: 15px; border: none; background: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+
+            <div id="mensagemErroLogin" style="display: none; background: #ffebee; border: 1px solid #ffcdd2; color: #c62828; padding: 10px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; text-align: left;">
+                ⚠️ Sua conta e/ou senha estão incorretas, tente novamente
+            </div>
+
+            <!-- FORMULÁRIO DE LOGIN -->
+            <form id="formLoginModal" onsubmit="realizarLogin(event)">
+                <h3 style="margin-top: 0; margin-bottom: 20px; text-align: left; font-size: 1.3rem;">Entrar</h3>
+                <input type="text" id="emailLogin" placeholder="E-mail ou CPF" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="password" id="senhaLogin" placeholder="Senha" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <button type="submit" style="width: 100%; background: #e65100; color: white; border: none; padding: 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-bottom: 15px;">ENTRAR</button>
+
+                <div style="display: flex; align-items: center; margin: 15px 0;">
+                    <hr style="flex: 1; border: none; border-top: 1px solid #eee;">
+                    <span style="padding: 0 10px; color: #aaa; font-size: 0.8rem;">OU</span>
+                    <hr style="flex: 1; border: none; border-top: 1px solid #eee;">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button type="button" onclick="fazerLoginSocial('Facebook')" style="flex: 1; padding: 10px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #3b5998; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="font-size: 1.1rem; font-weight: bold;">f</span> Facebook
+                    </button>
+                    <button type="button" onclick="fazerLoginSocial('Google')" style="flex: 1; padding: 10px; border: 1px solid #ccc; background: white; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #ea4335; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="font-size: 1.1rem; font-weight: bold;">G</span> Google
+                    </button>
+                </div>
+
+                <p style="text-align: center; font-size: 0.85rem; color: #666; margin: 0;">
+                    Novo na ExpressMarket? <a href="#" onclick="alternarAbaAuth('cadastro')" style="color: #e65100; font-weight: bold; text-decoration: none;">Cadastrar</a>
+                </p>
+            </form>
+
+            <!-- FORMULÁRIO DE CADASTRO -->
+            <form id="formCadastroModal" onsubmit="realizarCadastro(event)" style="display: none;">
+                <h3 style="margin-top: 0; margin-bottom: 15px; text-align: left; font-size: 1.3rem;">Cadastrar-se</h3>
+                <input type="text" id="cadNome" placeholder="Nome Completo" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="text" id="cadCpf" placeholder="CPF" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="email" id="cadEmail" placeholder="E-mail" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="text" id="cadTelefone" placeholder="Telefone" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="text" id="cadEndereco" placeholder="Endereço de Entrega" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="password" id="cadSenha" placeholder="Senha" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+
+                <button type="submit" style="width: 100%; background: #2e7d32; color: white; border: none; padding: 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-bottom: 15px;">CRIAR CONTA</button>
+
+                <p style="text-align: center; font-size: 0.85rem; color: #666; margin: 0;">
+                    Já possui conta? <a href="#" onclick="alternarAbaAuth('login')" style="color: #e65100; font-weight: bold; text-decoration: none;">Entre aqui</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE DETALHES DO PRODUTO -->
+    <div id="modalDetalhes" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative;">
+            <button type="button" onclick="fecharModal('modalDetalhes')" style="position: absolute; top: 10px; right: 15px; border: none; background: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+            <div id="modalDetalhesConteudo"></div>
+            <div style="margin-top: 20px; text-align: right;">
+                <button type="button" onclick="fecharModal('modalDetalhes')" style="background: #e65100; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="apps.js"></script>
+</body>
+</html>
