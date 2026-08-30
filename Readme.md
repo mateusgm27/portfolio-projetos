@@ -191,6 +191,27 @@ Modelagem de Dados: Estrutura desenvolvida via ER Diagram (utilizando Draw.io) p
       ## Link do Er Diagram : [🔗 Visualizar Diagrama do Banco de Dados (ERP)](./diagrama.png)
 
 
+      ##🚀 Projeto 08: Sistema de Logística com API C# e Front-end ExpressMarket
+
+Descrição: Sistema integrado de logística e e-commerce desenvolvido com uma API RESTful robusta em C# (.NET 8), banco de dados MySQL conteinerizado via Docker e um front-end moderno (ExpressMarket🛒) publicado via site. O projeto automatiza o controle de pedidos, produtos e rotas de entrega.
+
+Tecnologias Utilizadas:
+- **Back-end:** C# / .NET 8 (ASP.NET Core Web API)
+- **Front-end:** HTML5, CSS3, JavaScript (ExpressMarket)
+- **Banco de Dados:** MySQL 8.0 (Docker)
+- **Controle de Versão:** Git e GitHub
+
+Funcionalidades:
+- API RESTful estruturada com Controllers e Models para gerenciamento de dados de logística e entregas.
+- Interface web responsiva integrada.
+
+Links do Projeto:
+- 🔗 [Acessar a API e Código-Fonte no Repositório](https://github.com/mateusgm27/portfolio-projetos/tree/main/Projeto%208/Logistica_Api)
+- 🌐 [Visualizar o Site no Ar (Vercel)](https://portfolio-projetos-black.vercel.app)
+- 📄 [Visualizar o Script SQL do Projeto](https://github.com/mateusgm27/portfolio-projetos/blob/main/Projeto%208/Projeto%20db_logistica.sql)
+- 📊 [Visualizar o Diagrama ER](https://github.com/mateusgm27/portfolio-projetos/blob/main/Projeto%208/projeto8-er-diagram.png)
+
+
 
 
 
