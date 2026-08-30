@@ -206,7 +206,7 @@ Funcionalidades:
 - Interface web responsiva integrada.
 
 Links do Projeto:
-- 🔗 [Acessar a API e Código-Fonte no Repositório](https://github.com/mateusgm27/portfolio-projetos/tree/main/Projeto%208/Logistica_Api)
+- 🔗 [Acessar a API e Código-Fonte no Repositório](https://portfolio-projetos-Projeto 8/Logistica_Api/expressmarket-web)
 - 🌐 [Visualizar o Site no Ar (Vercel)](https://portfolio-projetos-black.vercel.app)
 - 📄 [Visualizar o Script SQL do Projeto](https://github.com/mateusgm27/portfolio-projetos/blob/main/Projeto%208/Projeto%20db_logistica.sql)
 - 📊 [Visualizar o Diagrama ER](https://github.com/mateusgm27/portfolio-projetos/blob/main/Projeto%208/projeto8-er-diagram.png)
