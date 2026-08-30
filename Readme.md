@@ -191,7 +191,7 @@ Modelagem de Dados: Estrutura desenvolvida via ER Diagram (utilizando Draw.io) p
       ## Link do Er Diagram : [🔗 Visualizar Diagrama do Banco de Dados (ERP)](./diagrama.png)
 
 
-      ##🚀 Projeto 08: Sistema de Logística com API C# e Front-end ExpressMarket
+      ## 🚀 Projeto 08: Sistema de Logística com API C# e Front-end ExpressMarket
 
 Descrição: Sistema integrado de logística e e-commerce desenvolvido com uma API RESTful robusta em C# (.NET 8), banco de dados MySQL conteinerizado via Docker e um front-end moderno (ExpressMarket🛒) publicado via site. O projeto automatiza o controle de pedidos, produtos e rotas de entrega.
 
