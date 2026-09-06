@@ -1,4 +1,5 @@
-const API_URL = const API_URL = "http://localhost:5000/api"; // ou a porta local que sua API .NET usa
+// Porta local da API .NET
+const API_URL = "http://localhost:5000/api";
 
 let todosProdutos = [];
 let categoriaAtiva = 'Todos';
