@@ -195,29 +195,31 @@ window.tratarErroImagem = function(img) {
     img.src = IMAGEM_PADRAO;
 };
 
-// CARREGAMENTO DE PRODUTOS DIRETO DA API DO BANCO DE DADOS
-async function carregarProdutos() {
-    console.log('Buscando produtos do banco de dados na API...');
+// CARREGAMENTO DE PRODUTOS LOCAL (Modo Portfólio Estático)
+function carregarProdutos() {
+    console.log('Carregando catálogo estático...');
     
-    try {
-        const resposta = await fetch(`${API_URL}/produtos`);
-        if (!resposta.ok) {
-            throw new Error('Erro ao buscar produtos da API.');
-        }
+    // Lista base de produtos para exibição no portfólio
+    todosProdutos = [
+        { id: 1, nome: "Azeite Extra Virgem", categoria: "Alimentos", preco: 35.90, estoque: 15, descricao: "Azeite de oliva extra virgem importado." },
+        { id: 2, nome: "Arroz 5kg", categoria: "Alimentos", preco: 28.50, estoque: 30, descricao: "Arroz tipo 1 de excelente qualidade." },
+        { id: 3, nome: "Café Premium 500g", categoria: "Alimentos", preco: 22.00, estoque: 20, descricao: "Café torrado e moído gourmet." },
+        { id: 4, nome: "Cadeira de Escritório", categoria: "Casa", preco: 450.00, estoque: 8, descricao: "Cadeira ergonômica com regulagem de altura." },
+        { id: 5, nome: "Teclado Mecanico Keychron", categoria: "Eletrônicos", preco: 380.00, estoque: 12, descricao: "Teclado mecânico com switches customizáveis." },
+        { id: 6, nome: "Mouse Gamer Razer", categoria: "Games", preco: 250.00, estoque: 10, descricao: "Mouse de alta precisão para jogos." },
+        { id: 7, nome: "Smart TV Samsung 50 4K", categoria: "Eletrônicos", preco: 2300.00, estoque: 5, descricao: "Smart TV Crystal UHD com inteligência artificial." },
+        { id: 8, nome: "Tênis Nike Air Force 1", categoria: "Moda", preco: 599.90, estoque: 14, descricao: "Tênis clássico e confortável para o dia a dia." }
+    ];
 
-        const dadosDoBanco = await resposta.json();
-        
-        // Mapeia os dados garantindo compatibilidade com as propriedades do banco (id, nome, preco, categoria, estoque, descricao)
-        todosProdutos = dadosDoBanco.map(prod => {
-            return {
-                id: prod.id || prod.Id,
-                nome: prod.nome || prod.Nome,
-                preco: Number(prod.preco || prod.Preco || 0),
-                categoria: prod.categoria || prod.Categoria || "Geral",
-                estoque: prod.estoque || prod.Estoque || 0,
-                descricao: prod.descricao || prod.Descricao || `${prod.nome || prod.Nome} de excelente qualidade disponível no ExpressMarket.`
-            };
-        });
+    // Garante as imagens mapeadas
+    todosProdutos = todosProdutos.map(produto => ({
+        ...produto,
+        imagemUrl: obterCaminhoImagem(produto.nome)
+    }));
+
+    renderizarProdutos(todosProdutos);
+    atualizarContadorCarrinho();
+}
 
         console.log(`${todosProdutos.length} produtos carregados do banco de dados com sucesso!`);
     } catch (erro) {
