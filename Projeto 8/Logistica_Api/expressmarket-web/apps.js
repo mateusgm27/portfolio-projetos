@@ -196,6 +196,7 @@ window.tratarErroImagem = function(img) {
 };
 
 // CARREGAMENTO DE PRODUTOS LOCAL (Modo Portfólio Estático)
+// CARREGAMENTO DE PRODUTOS LOCAL (Modo Portfólio Estático)
 function carregarProdutos() {
     console.log('Carregando catálogo estático...');
     
@@ -220,6 +221,8 @@ function carregarProdutos() {
     renderizarProdutos(todosProdutos);
     atualizarContadorCarrinho();
 }
+
+aplicarFiltros();
 
         console.log(`${todosProdutos.length} produtos carregados do banco de dados com sucesso!`);
     } catch (erro) {
