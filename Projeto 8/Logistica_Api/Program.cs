@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 var app = builder.Build();
 
-app.UseCors("AllowAll");
+app.UseCors("PermitirTudo");
 app.UseAuthorization();
 app.MapControllers();
 
