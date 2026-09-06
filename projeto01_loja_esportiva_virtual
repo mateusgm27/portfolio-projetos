@@ -1,0 +1,90 @@
+CREATE DATABASE loja_esportiva_virtual;
+USE loja_esportiva_virtual;
+
+
+CREATE TABLE clientes (
+    cliente_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    email VARCHAR(100),
+    telefone VARCHAR(15),
+	endereco TEXT(30));
+
+CREATE TABLE produtos (
+    produto_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    preco DECIMAL(10, 2),
+    estoque INT);
+
+
+CREATE TABLE pedidos (
+    pedido_id INT PRIMARY KEY AUTO_INCREMENT,
+    cliente_id INT,
+    data_pedido DATE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id)
+);
+
+
+CREATE TABLE itens_pedido (
+    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    pedido_id INT,
+    produto_id INT,
+    quantidade INT,
+    preco_unitario DECIMAL(10, 2),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(pedido_id),
+    FOREIGN KEY (produto_id) REFERENCES produtos(produto_id)
+);
+
+
+
+INSERT INTO clientes (cliente_id,nome, email,telefone,endereco) VALUES (1, "Marcelo Gomes", "marcelo6958@gmail.com", 946307503, "Rua A, 135");
+INSERT INTO clientes (cliente_id,nome, email,telefone,endereco) VALUES (2, "lucas almeida", "lucas4506@gmail.com", 987654321, 'Rua B, 165');
+INSERT INTO clientes (cliente_id,nome, email,telefone,endereco) VALUES (3, "Gustavo Soares", "Gustavo130@gmail.com", 584539741, 'Rua C, 850');
+INSERT INTO clientes (cliente_id,nome, email,telefone,endereco) VALUES (4, "Mateus Pereira", "Mateus189@gmail.com", 6585107506, 'Rua D, 987');
+INSERT INTO clientes (cliente_id,nome, email,telefone,endereco) VALUES (5, 'Pedro Alves', "Pedro741@gmail.com", 7412365103, 'Rua E, 654');
+
+INSERT INTO produtos (produto_id,nome,preco,estoque) VALUES (6, "Bola De Futebol", 89.00, 150);
+INSERT INTO produtos (produto_id,nome,preco,estoque) VALUES (7, "Camiseta Adidas", 45.00, 165);
+INSERT INTO produtos (produto_id,nome,preco,estoque) VALUES (8, "Bola De Volei", 100.00, 200);
+INSERT INTO produtos (produto_id,nome,preco,estoque) VALUES (9, "Chuteira Adidas", 130.00, 250);
+INSERT INTO produtos (produto_id,nome,preco,estoque) VALUES (10, "Skate", 171.00, 215);
+
+INSERT pedidos (pedido_id,cliente,data_pedido) VALUES (11, 1 , 2022-03-06);
+INSERT pedidos (pedido_id,cliente,data_pedido) VALUES (12, 2, 2022-03-08);
+INSERT pedidos (pedido_id,cliente,data_pedido) VALUES (13, 3, 2022-04-06);
+INSERT pedidos (pedido_id,cliente,data_pedido) VALUES (14, 4, 2022-04-11);
+INSERT pedidos (pedido_id,cliente,data_pedido) VALUES (15, 5, 2022-04-16);
+
+
+INSERT INTO itens_pedidos (item_id,pedido_id,produto_id,quantidade,preco_unitario) VALUES (16, 11, 6, 2, 89.00);
+INSERT INTO itens_pedidos (item_id,pedido_id,produto_id,quantidade,preco_unitario) VALUES (17, 12, 7, 4, 45.00);
+INSERT INTO itens_pedidos (item_id,pedido_id,produto_id,quantidade,preco_unitario) VALUES (18, 13, 8, 6, 100.00);
+INSERT INTO itens_pedidos (item_id,pedido_id,produto_id,quantidade,preco_unitario) VALUES (19, 14, 9, 3, '130.00');
+ INSERT INTO itens_pedidos (item_id,pedido_id,produto_id,quantidade,preco_unitario) VALUES (20, 15, 10, 5, 171.00);
+
+SELECT c.nome, c.email, p.pedido_id, p.data_pedido
+FROM clientes c
+JOIN pedidos p ON c.cliente_id = p.cliente_id;
+
+SELECT nome, preco
+FROM produtos
+WHERE preco < 100.00;
+
+SELECT nome, estoque
+FROM produtos
+WHERE estoque > 150;
+
+SELECT p.pedido_id, pr.nome AS produto_nome, ip.quantidade, ip.preco_unitario * ip.quantidade AS total_item
+FROM itens_pedidos ip
+JOIN produtos pr ON ip.produto_id = pr.produto_id
+JOIN pedidos p ON ip.pedido_id = p.pedido_id;
+
+SELECT c.nome, SUM(ip.quantidade * ip.preco_unitario) AS total_gasto
+FROM clientes c
+JOIN pedidos p ON c.cliente_id = p.cliente_id
+JOIN itens_pedidos ip ON p.pedido_id = ip.pedido_id
+GROUP BY c.cliente_id;
+
+SELECT pr.nome, pr.estoque, SUM(ip.quantidade) AS quantidade_vendida
+FROM produtos pr
+LEFT JOIN itens_pedidos ip ON pr.produto_id = ip.produto_id
+GROUP BY pr.produto_id;

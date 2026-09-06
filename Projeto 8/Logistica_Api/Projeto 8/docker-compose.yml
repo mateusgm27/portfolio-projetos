@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: expressmarket_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: senha_forte_root
+      MYSQL_DATABASE: expressmarket_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+    build: .
+    container_name: logistica_api_container
+    ports:
+      - "5000:5000"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=expressmarket_db;Uid=root;Pwd=senha_forte_root;
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
