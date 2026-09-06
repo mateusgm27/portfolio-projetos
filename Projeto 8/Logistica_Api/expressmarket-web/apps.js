@@ -1,4 +1,4 @@
-const API_URL = "https://portfolio-projetos.onrender.com/api/produtos";
+const API_URL = const API_URL = "http://localhost:5000/api"; // ou a porta local que sua API .NET usa
 
 let todosProdutos = [];
 let categoriaAtiva = 'Todos';
