@@ -1,4 +1,4 @@
-const API_URL = "https://portfolio-projetos.onrender.com/api";
+const API_URL = "https://portfolio-projetos.onrender.com/api/produtos";
 
 let todosProdutos = [];
 let categoriaAtiva = 'Todos';
