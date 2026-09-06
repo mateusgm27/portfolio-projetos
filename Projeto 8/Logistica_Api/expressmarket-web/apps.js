@@ -1,4 +1,4 @@
-// Porta local da API .NET
+// Porta local da API .NET (Desativada para modo portfólio estático)
 const API_URL = "http://localhost:5000/api";
 
 let todosProdutos = [];
@@ -196,7 +196,6 @@ window.tratarErroImagem = function(img) {
 };
 
 // CARREGAMENTO DE PRODUTOS LOCAL (Modo Portfólio Estático)
-// CARREGAMENTO DE PRODUTOS LOCAL (Modo Portfólio Estático)
 function carregarProdutos() {
     console.log('Carregando catálogo estático...');
     
@@ -222,27 +221,9 @@ function carregarProdutos() {
     atualizarContadorCarrinho();
 }
 
-aplicarFiltros();
-
-        console.log(`${todosProdutos.length} produtos carregados do banco de dados com sucesso!`);
-    } catch (erro) {
-        console.warn('⚠️ Falha ao conectar com a API local. Usando catálogo estático de segurança.', erro);
-        
-        // Fallback caso a API esteja desligada
-        todosProdutos = Object.keys(mapaImagensOnline).map((chave, index) => {
-            const nomeFormatado = chave.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1)).join(' ');
-            return {
-                id: index + 1,
-                nome: nomeFormatado,
-                preco: 99.90,
-                categoria: "Geral",
-                estoque: 10,
-                descricao: `${nomeFormatado} disponível (modo offline).`
-            };
-        });
-    }
-
-    aplicarFiltros();
+// Renderiza os produtos na tela
+function renderizarProdutos(produtos) {
+    exibirProdutos(produtos);
 }
 
 // EXIBIÇÃO NA TELA
@@ -324,6 +305,14 @@ function voltarParaHome() {
     aplicarFiltros();
 }
 
+// ATUALIZAR CONTADOR CARRINHO
+function atualizarContadorCarrinho() {
+    const btnCarrinho = document.getElementById('btnCarrinho');
+    if (btnCarrinho) {
+        btnCarrinho.innerText = `Carrinho (${quantidadeCarrinho})`;
+    }
+}
+
 // AÇÕES DE COMPRA E DETALHES COM AVISO DE TESTE/PORTFÓLIO
 window.comprarAgora = function(nomeProduto) {
     alert(`⚠️ Atenção: Este é um projeto de portfólio/demonstrativo (ExpressMarket). A compra do item "${nomeProduto}" é apenas um teste e não pode ser finalizada.`);
@@ -331,10 +320,7 @@ window.comprarAgora = function(nomeProduto) {
 
 window.adicionarAoCarrinho = function(nome) {
     quantidadeCarrinho++;
-    const btnCarrinho = document.getElementById('btnCarrinho');
-    if (btnCarrinho) {
-        btnCarrinho.innerText = `Carrinho (${quantidadeCarrinho})`;
-    }
+    atualizarContadorCarrinho();
     alert(`⚠️ Aviso de Demonstração: "${nome}" foi adicionado ao carrinho de teste (este é um projeto de portfólio).`);
 };
 
