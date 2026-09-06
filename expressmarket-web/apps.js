@@ -195,15 +195,29 @@ window.tratarErroImagem = function(img) {
 };
 
 // CARREGAMENTO DE PRODUTOS
+// CARREGAMENTO DE PRODUTOS DA API MYSQL
 async function carregarProdutos() {
+    console.log('Carregando produtos da API...');
     try {
-        const resposta = await fetch(`${API_URL}/Produtos`);
-        if (!resposta.ok) throw new Error('Erro ao buscar produtos');
-
+        const resposta = await fetch(`${API_URL}/produtos`);
+        if (!resposta.ok) {
+            throw new Error('Erro ao buscar produtos da API');
+        }
         todosProdutos = await resposta.json();
-        aplicarFiltros();
+        
+        // Garante que cada produto use a imagem correta mapeada
+        todosProdutos = todosProdutos.map(produto => ({
+            ...produto,
+            imagemUrl: obterCaminhoImagem(produto.nome)
+        }));
+
+        renderizarProdutos(todosProdutos);
+        atualizarContadorCarrinho();
     } catch (erro) {
-        console.error('Erro na requisição da API:', erro);
+        console.error('Erro ao carregar produtos:', erro);
+        // Fallback caso a API falhe
+        todosProdutos = [];
+        renderizarProdutos([]);
     }
 }
 
