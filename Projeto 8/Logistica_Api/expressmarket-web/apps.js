@@ -1,7 +1,6 @@
 // Porta local da API .NET (Desativada para modo portfólio estático)
 const API_URL = "http://localhost:5000/api";
 
-let todosProdutos = [];
 let categoriaAtiva = 'Todos';
 let quantidadeCarrinho = 0;
 let usuarioAutenticado = false;
@@ -41,7 +40,7 @@ const mapaImagensOnline = {
     "oleo motor 5w30": "assets/img/oleomotor.jpeg",
     "pneu michelin aro 15": "assets/img/pneu.jpeg",
     "sensor de re": "assets/img/sensor.webp",
-   "som automotivo pioneer": "assets/img/som-pioneer.jpeg",
+    "som automotivo pioneer": "assets/img/som-pioneer.jpeg",
 
     // Beleza
     "base liquida boca rosa": "assets/img/baseboca.webp",
@@ -177,7 +176,6 @@ const IMAGEM_PADRAO = 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b
 
 function obterCaminhoImagem(nomeProduto) {
     if (!nomeProduto) return IMAGEM_PADRAO;
-
     const chaveSemAcento = normalizarTexto(nomeProduto);
 
     for (const [chave, url] of Object.entries(mapaImagensOnline)) {
@@ -185,39 +183,151 @@ function obterCaminhoImagem(nomeProduto) {
             return url;
         }
     }
-
     return IMAGEM_PADRAO;
 }
 
-// Manipulador inteligente de erro para fallback automático
 window.tratarErroImagem = function(img) {
     img.onerror = null;
     img.src = IMAGEM_PADRAO;
 };
 
+// 📦 LISTA COMPLETA DE TODOS OS 122 PRODUTOS DO BANCO (CSV)
+const todosProdutos = [
+    { id: 1, nome: "IPhone Pro Max", categoria: "Eletronicos", preco: 7500.0, estoque: 50, descricao: "IPhone Pro Max de alta qualidade, categoria Eletronicos." },
+    { id: 2, nome: "Samsung Galaxy S24 Ultra", categoria: "Eletronicos", preco: 5800.0, estoque: 30, descricao: "Samsung Galaxy S24 Ultra de alta qualidade, categoria Eletronicos." },
+    { id: 3, nome: "MacBook Air M3", categoria: "Eletronicos", preco: 9500.0, estoque: 15, descricao: "MacBook Air M3 de alta qualidade, categoria Eletronicos." },
+    { id: 4, nome: "Kit Maquiagem Completo", categoria: "Beleza", preco: 200.0, estoque: 50, descricao: "Kit Maquiagem Completo de alta qualidade, categoria Beleza." },
+    { id: 5, nome: "Fone Sony WH-1000XM5", categoria: "Eletronicos", preco: 2100.0, estoque: 40, descricao: "Fone Sony WH-1000XM5 de alta qualidade, categoria Eletronicos." },
+    { id: 6, nome: "Mesa de Jantar 6 Cadeiras", categoria: "Casa", preco: 2200.0, estoque: 5, descricao: "Mesa de Jantar 6 Cadeiras de alta qualidade, categoria Casa." },
+    { id: 7, nome: "Secador de Cabelo Taiff", categoria: "Beleza", preco: 250.0, estoque: 40, descricao: "Secador de Cabelo Taiff de alta qualidade, categoria Beleza." },
+    { id: 8, nome: "Tapete Sala 2x3m", categoria: "Casa", preco: 300.0, estoque: 25, descricao: "Tapete Sala 2x3m de alta qualidade, categoria Casa." },
+    { id: 9, nome: "Nitendo Switch OLED", categoria: "Eletronicos", preco: 2400.0, estoque: 25, descricao: "Nitendo Switch OLED de alta qualidade, categoria Eletronicos." },
+    { id: 10, nome: "Kindle Paperwhite 16GB", categoria: "Eletronicos", preco: 799.0, estoque: 100, descricao: "Kindle Paperwhite 16GB de alta qualidade, categoria Eletronicos." },
+    { id: 11, nome: "Smart TV Samsung 50 4K", categoria: "Eletronicos", preco: 2300.0, estoque: 20, descricao: "Smart TV Samsung 50 4K de alta qualidade, categoria Eletronicos." },
+    { id: 12, nome: "PlayStation 5", categoria: "Games", preco: 3800.0, estoque: 15, descricao: "PlayStation 5 de alta qualidade, categoria Games." },
+    { id: 13, nome: "Xbox Series S", categoria: "Games", preco: 2500.0, estoque: 25, descricao: "Xbox Series S de alta qualidade, categoria Games." },
+    { id: 14, nome: "Controle PS5 DualSense", categoria: "Games", preco: 450.0, estoque: 60, descricao: "Controle PS5 DualSense de alta qualidade, categoria Games." },
+    { id: 15, nome: "Headset Gamer HyperX", categoria: "Games", preco: 350.0, estoque: 40, descricao: "Headset Gamer HyperX de alta qualidade, categoria Games." },
+    { id: 16, nome: "Mouse Gamer Razer", categoria: "Games", preco: 250.0, estoque: 50, descricao: "Mouse Gamer Razer de alta qualidade, categoria Games." },
+    { id: 17, nome: "Teclado Mecanico Keychron", categoria: "Eletronicos", preco: 500.0, estoque: 35, descricao: "Teclado Mecanico Keychron de alta qualidade, categoria Eletronicos." },
+    { id: 18, nome: "Cadeira Gamer ThunderX3", categoria: "Games", preco: 1200.0, estoque: 10, descricao: "Cadeira Gamer ThunderX3 de alta qualidade, categoria Games." },
+    { id: 19, nome: "Monitor LG Ultrawide 29", categoria: "Eletronicos", preco: 1400.0, estoque: 18, descricao: "Monitor LG Ultrawide 29 de alta qualidade, categoria Eletronicos." },
+    { id: 20, nome: "Caixa de Som JBL Flip 6", categoria: "Eletronicos", preco: 600.0, estoque: 45, descricao: "Caixa de Som JBL Flip 6 de alta qualidade, categoria Eletronicos." },
+    { id: 21, nome: "Smartwatch Apple Watch Series 9", categoria: "Eletronicos", preco: 3500.0, estoque: 20, descricao: "Smartwatch Apple Watch Series 9 de alta qualidade, categoria Eletronicos." },
+    { id: 22, nome: "Tablet Samsung Galaxy Tab S9", categoria: "Eletronicos", preco: 4200.0, estoque: 15, descricao: "Tablet Samsung Galaxy Tab S9 de alta qualidade, categoria Eletronicos." },
+    { id: 23, nome: "Camera Canon EOS Rebel T7", categoria: "Eletronicos", preco: 3200.0, estoque: 8, descricao: "Camera Canon EOS Rebel T7 de alta qualidade, categoria Eletronicos." },
+    { id: 24, nome: "Power Bank 20000mAh", categoria: "Eletronicos", preco: 180.0, estoque: 80, descricao: "Power Bank 20000mAh de alta qualidade, categoria Eletronicos." },
+    { id: 25, nome: "Volante Logitech G29", categoria: "Games", preco: 1900.0, estoque: 7, descricao: "Volante Logitech G29 de alta qualidade, categoria Games." },
+    { id: 26, nome: "Jogo FIFA 24", categoria: "Games", preco: 250.0, estoque: 100, descricao: "Jogo FIFA 24 de alta qualidade, categoria Games." },
+    { id: 27, nome: "Jogo GTA V", categoria: "Games", preco: 150.0, estoque: 100, descricao: "Jogo GTA V de alta qualidade, categoria Games." },
+    { id: 28, nome: "Video Game Stick 20000 Jogos", categoria: "Games", preco: 160.0, estoque: 50, descricao: "Video Game Stick 20000 Jogos de alta qualidade, categoria Games." },
+    { id: 29, nome: "Suporte Gamer para Controle e Fone", categoria: "Games", preco: 90.0, estoque: 40, descricao: "Suporte Gamer para Controle e Fone de alta qualidade, categoria Games." },
+    { id: 30, nome: "Capa Case Silicone Controle PS5", categoria: "Games", preco: 50.0, estoque: 70, descricao: "Capa Case Silicone Controle PS5 de alta qualidade, categoria Games." },
+    { id: 31, nome: "Geladeira Brastemp", categoria: "Eletrodomésticos", preco: 3500.0, estoque: 6, descricao: "Geladeira Brastemp de alta qualidade, categoria Eletrodomésticos." },
+    { id: 32, nome: "Fogao 4 Bocas", categoria: "Eletrodomésticos", preco: 1200.0, estoque: 12, descricao: "Fogao 4 Bocas de alta qualidade, categoria Eletrodomésticos." },
+    { id: 33, nome: "Maquina de Lavar 12kg", categoria: "Eletrodomésticos", preco: 2100.0, estoque: 9, descricao: "Maquina de Lavar 12kg de alta qualidade, categoria Eletrodomésticos." },
+    { id: 34, nome: "Microondas Eletrolux", categoria: "Eletrodomésticos", preco: 750.0, estoque: 25, descricao: "Microondas Eletrolux de alta qualidade, categoria Eletrodomésticos." },
+    { id: 35, nome: "Air Fryer Mondial 4L", categoria: "Eletrodomésticos", preco: 400.0, estoque: 35, descricao: "Air Fryer Mondial 4L de alta qualidade, categoria Eletrodomésticos." },
+    { id: 36, nome: "Cafeteira Dolce Gusto", categoria: "Eletrodomésticos", preco: 450.0, estoque: 20, descricao: "Cafeteira Dolce Gusto de alta qualidade, categoria Eletrodomésticos." },
+    { id: 37, nome: "Liquidificador Mondial", categoria: "Eletrodomésticos", preco: 120.0, estoque: 50, descricao: "Liquidificador Mondial de alta qualidade, categoria Eletrodomésticos." },
+    { id: 38, nome: "Batedeira Arno", categoria: "Eletrodomésticos", preco: 280.0, estoque: 30, descricao: "Batedeira Arno de alta qualidade, categoria Eletrodomésticos." },
+    { id: 39, nome: "Aspirador de Po Electrolux", categoria: "Eletrodomésticos", preco: 350.0, estoque: 22, descricao: "Aspirador de Po Electrolux de alta qualidade, categoria Eletrodomésticos." },
+    { id: 40, nome: "Purificador de Agua", categoria: "Eletrodomésticos", preco: 600.0, estoque: 15, descricao: "Purificador de Agua de alta qualidade, categoria Eletrodomésticos." },
+    { id: 41, nome: "Cama Box Casal", categoria: "Casa", preco: 1100.0, estoque: 8, descricao: "Cama Box Casal de alta qualidade, categoria Casa." },
+    { id: 42, nome: "Guarda Roupa 6 Portas", categoria: "Casa", preco: 1800.0, estoque: 5, descricao: "Guarda Roupa 6 Portas de alta qualidade, categoria Casa." },
+    { id: 43, nome: "Sofá 3 Lugares Retrátil", categoria: "Casa", preco: 1900.0, estoque: 7, descricao: "Sofá 3 Lugares Retrátil de alta qualidade, categoria Casa." },
+    { id: 44, nome: "Painel para TV até 55 polegadas", categoria: "Casa", preco: 550.0, estoque: 15, descricao: "Painel para TV até 55 polegadas de alta qualidade, categoria Casa." },
+    { id: 45, nome: "Colchão Casal D33", categoria: "Casa", preco: 750.0, estoque: 12, descricao: "Colchão Casal D33 de alta qualidade, categoria Casa." },
+    { id: 46, nome: "Ventilador Arno", categoria: "Casa", preco: 250.0, estoque: 30, descricao: "Ventilador Arno de alta qualidade, categoria Casa." },
+    { id: 47, nome: "Panela de Pressao 5L", categoria: "Casa", preco: 130.0, estoque: 40, descricao: "Panela de Pressao 5L de alta qualidade, categoria Casa." },
+    { id: 48, nome: "Espelho Decorativo", categoria: "Casa", preco: 200.0, estoque: 18, descricao: "Espelho Decorativo de alta qualidade, categoria Casa." },
+    { id: 49, nome: "Cortina Blackout", categoria: "Casa", preco: 150.0, estoque: 25, descricao: "Cortina Blackout de alta qualidade, categoria Casa." },
+    { id: 50, nome: "Luminaria LED", categoria: "Casa", preco: 80.0, estoque: 50, descricao: "Luminaria LED de alta qualidade, categoria Casa." },
+    { id: 51, nome: "Tênis Nike Air Force 1", categoria: "Moda", preco: 600.0, estoque: 25, descricao: "Tênis Nike Air Force 1 de alta qualidade, categoria Moda." },
+    { id: 52, nome: "Tênis Adidas Ultraboost", categoria: "Moda", preco: 800.0, estoque: 20, descricao: "Tênis Adidas Ultraboost de alta qualidade, categoria Moda." },
+    { id: 53, nome: "Camisa Brasil Nike", categoria: "Moda", preco: 300.0, estoque: 40, descricao: "Camisa Brasil Nike de alta qualidade, categoria Moda." },
+    { id: 54, nome: "Camisa Argentina Adidas", categoria: "Moda", preco: 300.0, estoque: 35, descricao: "Camisa Argentina Adidas de alta qualidade, categoria Moda." },
+    { id: 55, nome: "Jaqueta Jeans Masculina", categoria: "Moda", preco: 250.0, estoque: 15, descricao: "Jaqueta Jeans Masculina de alta qualidade, categoria Moda." },
+    { id: 56, nome: "Vestido Feminino Casual", categoria: "Moda", preco: 180.0, estoque: 30, descricao: "Vestido Feminino Casual de alta qualidade, categoria Moda." },
+    { id: 57, nome: "Mochila Executiva para Notebook", categoria: "Moda", preco: 200.0, estoque: 45, descricao: "Mochila Executiva para Notebook de alta qualidade, categoria Moda." },
+    { id: 58, nome: "Oculos de Sol Ray-Ban", categoria: "Moda", preco: 500.0, estoque: 18, descricao: "Oculos de Sol Ray-Ban de alta qualidade, categoria Moda." },
+    { id: 59, nome: "Relogio Casio", categoria: "Moda", preco: 250.0, estoque: 25, descricao: "Relogio Casio de alta qualidade, categoria Moda." },
+    { id: 60, nome: "Bone Adidas", categoria: "Moda", preco: 120.0, estoque: 40, descricao: "Bone Adidas de alta qualidade, categoria Moda." },
+    { id: 61, nome: "Perfume Chanel No.5", categoria: "Beleza", preco: 900.0, estoque: 12, descricao: "Perfume Chanel No.5 de alta qualidade, categoria Beleza." },
+    { id: 62, nome: "Protetor Solar La Roche-Posay", categoria: "Beleza", preco: 90.0, estoque: 60, descricao: "Protetor Solar La Roche-Posay de alta qualidade, categoria Beleza." },
+    { id: 63, nome: "Base Liquida Boca Rosa", categoria: "Beleza", preco: 70.0, estoque: 50, descricao: "Base Liquida Boca Rosa de alta qualidade, categoria Beleza." },
+    { id: 64, nome: "Serum Facial Vitamina C", categoria: "Beleza", preco: 110.0, estoque: 40, descricao: "Serum Facial Vitamina C de alta qualidade, categoria Beleza." },
+    { id: 65, nome: "Mascara de Cilios Maybelline", categoria: "Beleza", preco: 60.0, estoque: 55, descricao: "Mascara de Cilios Maybelline de alta qualidade, categoria Beleza." },
+    { id: 66, nome: "Chapinha Gama Italy", categoria: "Beleza", preco: 220.0, estoque: 25, descricao: "Chapinha Gama Italy de alta qualidade, categoria Beleza." },
+    { id: 67, nome: "Kit Pinceis de Maquiagem", categoria: "Beleza", preco: 80.0, estoque: 45, descricao: "Kit Pinceis de Maquiagem de alta qualidade, categoria Beleza." },
+    { id: 68, nome: "Bicicleta Aro Shimano", categoria: "Esporte", preco: 1800.0, estoque: 10, descricao: "Bicicleta Aro Shimano de alta qualidade, categoria Esporte." },
+    { id: 69, nome: "Esteira Eletrica", categoria: "Esporte", preco: 3200.0, estoque: 5, descricao: "Esteira Eletrica de alta qualidade, categoria Esporte." },
+    { id: 70, nome: "Halter 10kg", categoria: "Esporte", preco: 120.0, estoque: 30, descricao: "Halter 10kg de alta qualidade, categoria Esporte." },
+    { id: 71, nome: "Corda de Pular", categoria: "Esporte", preco: 40.0, estoque: 80, descricao: "Corda de Pular de alta qualidade, categoria Esporte." },
+    { id: 72, nome: "Bola de Futebol Adidas Champions", categoria: "Esporte", preco: 180.0, estoque: 40, descricao: "Bola de Futebol Adidas Champions de alta qualidade, categoria Esporte." },
+    { id: 73, nome: "Chuteira Nike", categoria: "Esporte", preco: 350.0, estoque: 25, descricao: "Chuteira Nike de alta qualidade, categoria Esporte." },
+    { id: 74, nome: "Luva de Boxe Venum 12oz", categoria: "Esporte", preco: 280.0, estoque: 15, descricao: "Luva de Boxe Venum 12oz de alta qualidade, categoria Esporte." },
+    { id: 75, nome: "Kimono Jiu Jitsu", categoria: "Esporte", preco: 450.0, estoque: 12, descricao: "Kimono Jiu Jitsu de alta qualidade, categoria Esporte." },
+    { id: 76, nome: "Capacete Ciclismo Absolute", categoria: "Esporte", preco: 150.0, estoque: 20, descricao: "Capacete Ciclismo Absolute de alta qualidade, categoria Esporte." },
+    { id: 77, nome: "Livro Clean Code", categoria: "Livros", preco: 85.0, estoque: 50, descricao: "Livro Clean Code de alta qualidade, categoria Livros." },
+    { id: 78, nome: "Livro Arquitetura Limpa", categoria: "Livros", preco: 90.0, estoque: 45, descricao: "Livro Arquitetura Limpa de alta qualidade, categoria Livros." },
+    { id: 79, nome: "Livro O Codificador Limpo", categoria: "Livros", preco: 80.0, estoque: 30, descricao: "Livro O Codificador Limpo de alta qualidade, categoria Livros." },
+    { id: 80, nome: "Livro Entendendo Algoritmos", categoria: "Livros", preco: 75.0, estoque: 40, descricao: "Livro Entendendo Algoritmos de alta qualidade, categoria Livros." },
+    { id: 81, nome: "Livro Padroes de Projeto", categoria: "Livros", preco: 95.0, estoque: 25, descricao: "Livro Padroes de Projeto de alta qualidade, categoria Livros." },
+    { id: 82, nome: "Livro Harry Potter", categoria: "Livros", preco: 60.0, estoque: 60, descricao: "Livro Harry Potter de alta qualidade, categoria Livros." },
+    { id: 83, nome: "Livro O Hobbit", categoria: "Livros", preco: 50.0, estoque: 55, descricao: "Livro O Hobbit de alta qualidade, categoria Livros." },
+    { id: 84, nome: "Lego Classic 500 Pecas", categoria: "Brinquedos", preco: 250.0, estoque: 20, descricao: "Lego Classic 500 Pecas de alta qualidade, categoria Brinquedos." },
+    { id: 85, nome: "Boneca Barbie", categoria: "Brinquedos", preco: 120.0, estoque: 35, descricao: "Boneca Barbie de alta qualidade, categoria Brinquedos." },
+    { id: 86, nome: "Carrinho Hot Wheels", categoria: "Brinquedos", preco: 20.0, estoque: 150, descricao: "Carrinho Hot Wheels de alta qualidade, categoria Brinquedos." },
+    { id: 87, nome: "Pista Hot Wheels Loop", categoria: "Brinquedos", preco: 220.0, estoque: 15, descricao: "Pista Hot Wheels Loop de alta qualidade, categoria Brinquedos." },
+    { id: 88, nome: "Quebra-Cabeca 1000 Pecas", categoria: "Brinquedos", preco: 70.0, estoque: 30, descricao: "Quebra-Cabeca 1000 Pecas de alta qualidade, categoria Brinquedos." },
+    { id: 89, nome: "Massinha Play-Doh Kit", categoria: "Brinquedos", preco: 60.0, estoque: 40, descricao: "Massinha Play-Doh Kit de alta qualidade, categoria Brinquedos." },
+    { id: 90, nome: "Pelucia Pokemon Pikachu", categoria: "Brinquedos", preco: 90.0, estoque: 25, descricao: "Pelucia Pokemon Pikachu de alta qualidade, categoria Brinquedos." },
+    { id: 91, nome: "Jogo Imagem & Acao", categoria: "Brinquedos", preco: 110.0, estoque: 20, descricao: "Jogo Imagem & Acao de alta qualidade, categoria Brinquedos." },
+    { id: 92, nome: "Racao para Cachorro 10kg", categoria: "Pet", preco: 130.0, estoque: 40, descricao: "Racao para Cachorro 10kg de alta qualidade, categoria Pet." },
+    { id: 93, nome: "Cama para Cachorro", categoria: "Pet", preco: 120.0, estoque: 25, descricao: "Cama para Cachorro de alta qualidade, categoria Pet." },
+    { id: 94, nome: "Brinquedo para Gato", categoria: "Pet", preco: 30.0, estoque: 60, descricao: "Brinquedo para Gato de alta qualidade, categoria Pet." },
+    { id: 95, nome: "Arranhador para Gato", categoria: "Pet", preco: 150.0, estoque: 18, descricao: "Arranhador para Gato de alta qualidade, categoria Pet." },
+    { id: 96, nome: "Areia para Gato", categoria: "Pet", preco: 40.0, estoque: 70, descricao: "Areia para Gato de alta qualidade, categoria Pet." },
+    { id: 97, nome: "Comedouro Automatico", categoria: "Pet", preco: 90.0, estoque: 20, descricao: "Comedouro Automatico de alta qualidade, categoria Pet." },
+    { id: 98, nome: "Shampoo Pet", categoria: "Pet", preco: 35.0, estoque: 50, descricao: "Shampoo Pet de alta qualidade, categoria Pet." },
+    { id: 99, nome: "Coleira Pet", categoria: "Pet", preco: 45.0, estoque: 45, descricao: "Coleira Pet de alta qualidade, categoria Pet." },
+    { id: 100, nome: "Arroz 5kg", categoria: "Alimentos", preco: 28.0, estoque: 100, descricao: "Arroz 5kg de alta qualidade, categoria Alimentos." },
+    { id: 101, nome: "Feijao 1kg", categoria: "Alimentos", preco: 9.0, estoque: 100, descricao: "Feijao 1kg de alta qualidade, categoria Alimentos." },
+    { id: 102, nome: "Azeite Extra Virgem", categoria: "Alimentos", preco: 35.0, estoque: 50, descricao: "Azeite Extra Virgem de alta qualidade, categoria Alimentos." },
+    { id: 103, nome: "Cafe Premium 500g", categoria: "Alimentos", preco: 22.0, estoque: 60, descricao: "Cafe Premium 500g de alta qualidade, categoria Alimentos." },
+    { id: 104, nome: "Leite Integral 1L", categoria: "Alimentos", preco: 6.0, estoque: 120, descricao: "Leite Integral 1L de alta qualidade, categoria Alimentos." },
+    { id: 105, nome: "Macarrao 500g", categoria: "Alimentos", preco: 5.0, estoque: 100, descricao: "Macarrao 500g de alta qualidade, categoria Alimentos." },
+    { id: 106, nome: "Chocolate Lindt", categoria: "Alimentos", preco: 25.0, estoque: 80, descricao: "Chocolate Lindt de alta qualidade, categoria Alimentos." },
+    { id: 107, nome: "Refrigerante Coca-Cola 2L", categoria: "Alimentos", preco: 10.0, estoque: 150, descricao: "Refrigerante Coca-Cola 2L de alta qualidade, categoria Alimentos." },
+    { id: 108, nome: "Pneu Michelin Aro 15", categoria: "Automotivo", preco: 600.0, estoque: 16, descricao: "Pneu Michelin Aro 15 de alta qualidade, categoria Automotivo." },
+    { id: 109, nome: "Oleo Motor 5W30", categoria: "Automotivo", preco: 60.0, estoque: 50, descricao: "Oleo Motor 5W30 de alta qualidade, categoria Automotivo." },
+    { id: 110, nome: "Bateria Automotiva", categoria: "Automotivo", preco: 500.0, estoque: 10, descricao: "Bateria Automotiva de alta qualidade, categoria Automotivo." },
+    { id: 111, nome: "Kit Multimidia Carro", categoria: "Automotivo", preco: 1100.0, estoque: 12, descricao: "Kit Multimidia Carro de alta qualidade, categoria Automotivo." },
+    { id: 112, nome: "Lampada LED", categoria: "Automotivo", preco: 40.0, estoque: 70, descricao: "Lampada LED de alta qualidade, categoria Automotivo." },
+    { id: 113, nome: "Capa para Banco", categoria: "Automotivo", preco: 180.0, estoque: 20, descricao: "Capa para Banco de alta qualidade, categoria Automotivo." },
+    { id: 114, nome: "Sensor de Re", categoria: "Automotivo", preco: 120.0, estoque: 30, descricao: "Sensor de Re de alta qualidade, categoria Automotivo." },
+    { id: 115, nome: "Som Automotivo Pioneer", categoria: "Automotivo", preco: 450.0, estoque: 15, descricao: "Som Automotivo Pioneer de alta qualidade, categoria Automotivo." },
+    { id: 116, nome: "SSD NVMe 1TB Kingston", categoria: "Informatica", preco: 450.0, estoque: 40, descricao: "SSD NVMe 1TB Kingston de alta qualidade, categoria Informatica." },
+    { id: 117, nome: "Memoria RAM 16GB DDR4", categoria: "Informatica", preco: 280.0, estoque: 50, descricao: "Memoria RAM 16GB DDR4 de alta qualidade, categoria Informatica." },
+    { id: 118, nome: "Placa de Video", categoria: "Informatica", preco: 2500.0, estoque: 8, descricao: "Placa de Video de alta qualidade, categoria Informatica." },
+    { id: 119, nome: "Roteador TP-Link AC1200", categoria: "Informatica", preco: 200.0, estoque: 30, descricao: "Roteador TP-Link AC1200 de alta qualidade, categoria Informatica." },
+    { id: 120, nome: "Impressora HP DeskJet 2774", categoria: "Informatica", preco: 380.0, estoque: 15, descricao: "Impressora HP DeskJet 2774 de alta qualidade, categoria Informatica." },
+    { id: 121, nome: "Webcam Full HD Logitech", categoria: "Informatica", preco: 250.0, estoque: 25, descricao: "Webcam Full HD Logitech de alta qualidade, categoria Informatica." },
+    { id: 122, nome: "Hub USB-C 7 em 1", categoria: "Informatica", preco: 150.0, estoque: 35, descricao: "Hub USB-C 7 em 1 de alta qualidade, categoria Informatica." }
+];
+
 // CARREGAMENTO DE PRODUTOS LOCAL (Modo Portfólio Estático)
 function carregarProdutos() {
-    console.log('Carregando catálogo estático...');
+    console.log('Carregando catálogo estático completo com', todosProdutos.length, 'produtos...');
     
-    // Lista base de produtos para exibição no portfólio
-    todosProdutos = [
-        { id: 1, nome: "Azeite Extra Virgem", categoria: "Alimentos", preco: 35.90, estoque: 15, descricao: "Azeite de oliva extra virgem importado." },
-        { id: 2, nome: "Arroz 5kg", categoria: "Alimentos", preco: 28.50, estoque: 30, descricao: "Arroz tipo 1 de excelente qualidade." },
-        { id: 3, nome: "Café Premium 500g", categoria: "Alimentos", preco: 22.00, estoque: 20, descricao: "Café torrado e moído gourmet." },
-        { id: 4, nome: "Cadeira de Escritório", categoria: "Casa", preco: 450.00, estoque: 8, descricao: "Cadeira ergonômica com regulagem de altura." },
-        { id: 5, nome: "Teclado Mecanico Keychron", categoria: "Eletrônicos", preco: 380.00, estoque: 12, descricao: "Teclado mecânico com switches customizáveis." },
-        { id: 6, nome: "Mouse Gamer Razer", categoria: "Games", preco: 250.00, estoque: 10, descricao: "Mouse de alta precisão para jogos." },
-        { id: 7, nome: "Smart TV Samsung 50 4K", categoria: "Eletrônicos", preco: 2300.00, estoque: 5, descricao: "Smart TV Crystal UHD com inteligência artificial." },
-        { id: 8, nome: "Tênis Nike Air Force 1", categoria: "Moda", preco: 599.90, estoque: 14, descricao: "Tênis clássico e confortável para o dia a dia." }
-    ];
-
-    // Garante as imagens mapeadas
-    todosProdutos = todosProdutos.map(produto => ({
+    // Associa as imagens mapeadas a cada produto
+    const produtosFormatados = todosProdutos.map(produto => ({
         ...produto,
         imagemUrl: obterCaminhoImagem(produto.nome)
     }));
 
-    renderizarProdutos(todosProdutos);
+    renderizarProdutos(produtosFormatados);
     atualizarContadorCarrinho();
 }
 
@@ -276,7 +386,7 @@ function aplicarFiltros() {
 
     if (termoBuscaNorm === '' && (catFiltroNorm === 'todos' || catFiltroNorm === '')) {
         if (tituloSecao) tituloSecao.innerText = 'Produtos em Destaque';
-        const destaques = [...todosProdutos].sort((a, b) => (a.preco || 0) - (b.preco || 0)).slice(0, 6);
+        const destaques = [...todosProdutos].sort((a, b) => (a.preco || 0) - (b.preco || 0)).slice(0, 12);
         exibirProdutos(destaques);
         return;
     }
