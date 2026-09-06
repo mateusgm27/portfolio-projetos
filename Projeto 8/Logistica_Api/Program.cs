@@ -4,33 +4,20 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. OBRIGATÓRIO: Registra os Controllers no container de injeção de dependência
-builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("PermitirTudo", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+// Configurar CORS para liberar o Vercel
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll", policy => {
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
     });
 });
 
+builder.Services.AddControllers();
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseCors("PermitirTudo");
-
-// 2. OBRIGATÓRIO: Mapeia as rotas registradas na pasta Controllers/
+app.UseCors("AllowAll");
+app.UseAuthorization();
 app.MapControllers();
 
-app.Run();
+// Porta dinâmica exigida por servidores em nuvem (Render/Railway)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Run($"http://0.0.0.0:{port}");
